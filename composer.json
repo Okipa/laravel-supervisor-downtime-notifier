@@ -1,0 +1,73 @@
+{
+    "name": "okipa/laravel-supervisor-downtime-notifier",
+    "description": "Get notified when supervisor is down.",
+    "keywords": [
+        "okipa",
+        "package",
+        "php",
+        "laravel",
+        "supervisor",
+        "service",
+        "process",
+        "processes",
+        "worker",
+        "workers",
+        "down",
+        "downtime",
+        "notify",
+        "notifier",
+        "laravel-supervisor-downtime-notifier"
+    ],
+    "homepage": "https://github.com/Okipa/laravel-supervisor-downtime-notifier",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arthur LORENT",
+            "email": "arthur.lorent@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "illuminate/support": "^6.0||^7.0",
+        "laravel-notification-channels/webhook": "^2.0",
+        "laravel/slack-notification-channel": "^2.0"
+    },
+    "require-dev": {
+        "nunomaduro/larastan": "^0.5",
+        "orchestra/testbench": "^4.0||^5.0",
+        "phpmd/phpmd": "^2.8",
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Okipa\\LaravelSupervisorDowntimeNotifier\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Okipa\\LaravelSupervisorDowntimeNotifier\\Test\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": [
+            "vendor/bin/phpcbf",
+            "vendor/bin/phpcs",
+            "vendor/bin/phpmd config,src text phpmd.xml",
+            "vendor/bin/phpstan analyse",
+            "vendor/bin/phpunit"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Okipa\\LaravelSupervisorDowntimeNotifier\\SupervisorDowntimeNotifierServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
