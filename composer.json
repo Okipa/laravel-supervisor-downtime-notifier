@@ -34,7 +34,7 @@
         "laravel/slack-notification-channel": "^2.0"
     },
     "require-dev": {
-        "nunomaduro/larastan": "^0.5",
+        "nunomaduro/larastan": "^0.6",
         "orchestra/testbench": "^4.0||^5.0",
         "phpmd/phpmd": "^2.8",
         "squizlabs/php_codesniffer": "^3.5"

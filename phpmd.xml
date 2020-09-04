@@ -41,6 +41,7 @@
 	</rule>
 	<!-- naming rules -->
 	<rule ref="rulesets/naming.xml">
+        <exclude name="LongClassName"/>
 		<exclude name="ShortVariable"/>
 		<exclude name="LongVariable"/>
 		<exclude name="ShortMethodName"/>
