@@ -18,7 +18,12 @@ Notifications can be sent by mail, Slack and webhooks (chats often provide a web
 
 | Laravel version | PHP version | Package version |
 |---|---|---|
+| ^7.0 | ^7.4 | ^2.0 |
 | ^6.0 | ^7.4 | ^1.0 |
+
+## Upgrade guide
+
+* [From v1 to V2](/docs/upgrade-guides/from-v1-to-v2.md)
 
 ## Table of Contents
 * [Requirements](#requirements)
@@ -53,13 +58,23 @@ That being said, you still can use this package for other servers OS by using yo
 Install the package with composer:
 
 ```bash
-composer require "okipa/laravel-supervisor-downtime-notifier:^1.0"
+composer require "okipa/laravel-supervisor-downtime-notifier:^2.0"
 ```
 
-In case you want to use `Slack` notifications you'll also have to install:
+If you intend to send `Slack` notifications you will have to install:
+
+* https://github.com/laravel/slack-notification-channel
 
 ```bash
-composer require guzzlehttp/guzzle
+composer require laravel/slack-notification-channel
+```
+
+If you intend to send `webhook` notifications you will have to install:
+
+* https://github.com/laravel-notification-channels/webhook
+
+```bash
+composer require laravel-notification-channels/webhook
 ```
 
 ## Configuration
@@ -102,7 +117,7 @@ $schedule->command('supervisor:downtime:notify')->everyFifteenMinutes();
 
 And you will be notified if your supervisor service is not running, or if your environment supervisor processes are down when the command will be executed.
 
-To check if everything is correctly configured, you can simulate supervisor downtime detection:
+Once everything has been set up, you can check if the configuration is correct by simulating supervisor processes downtime:
 
 ```bash
 php artisan supervisor:downtime:simulate

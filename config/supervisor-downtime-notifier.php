@@ -1,7 +1,5 @@
 <?php
 
-use NotificationChannels\Webhook\WebhookChannel;
-
 return [
 
     /*
@@ -65,13 +63,17 @@ return [
     /*
      * The channels to which the notification will be sent.
      */
-    'channels' => ['mail', 'slack', WebhookChannel::class],
+    'channels' => [
+        'mail',
+        // 'slack', // Requires laravel/slack-notification-channel
+        // NotificationChannels\Webhook\WebhookChannel::class // Requires laravel-notification-channels/webhook
+    ],
 
     'mail' => ['to' => 'email@example.test'],
 
     'slack' => ['webhookUrl' => 'https://your-slack-webhook.slack.com'],
 
-    // rocket chat webhook example
+    // Rocket chat webhook example
     'webhook' => ['url' => 'https://rocket.chat/hooks/1234/5678'],
 
 ];
