@@ -27,17 +27,17 @@ class ServiceNotStarted extends Notification
     public function toMail(): MailMessage
     {
         return (new MailMessage)->level('error')
-            ->subject(__('[:app - :env] supervisor service is not started', [
+            ->subject((string) __('[:app - :env] supervisor service is not started', [
                 'app' => config('app.name'),
                 'env' => config('app.env'),
             ]))
-            ->line(__('We have detected that the supervisor service is not started on [:app - :env](:url).', [
+            ->line((string) __('We have detected that the supervisor service is not started on [:app - :env](:url).', [
                 'app' => config('app.name'),
                 'env' => config('app.env'),
                 'url' => config('app.url'),
             ]))
-            ->line('Please restart you supervisor service connecting to your server and executing the '
-                . '"supervisorctl restart" command line.');
+            ->line((string) __('Please restart you supervisor service connecting to your server and executing the '
+                . '"supervisorctl restart" command line.'));
     }
 
     /**
@@ -48,7 +48,7 @@ class ServiceNotStarted extends Notification
     public function toSlack(): SlackMessage
     {
         return (new SlackMessage)->error()
-            ->content('⚠ ' . __('`[:app - :env]` supervisor service is not started on :url.', [
+            ->content('⚠ ' . (string) __('`[:app - :env]` supervisor service is not started on :url.', [
                     'app' => config('app.name'),
                     'env' => config('app.env'),
                     'url' => config('app.url'),
@@ -64,7 +64,7 @@ class ServiceNotStarted extends Notification
     {
         // rocket chat webhook example
         return WebhookMessage::create()->data([
-            'text' => '⚠ ' . __('`[:app - :env]` supervisor service is not started on :url.', [
+            'text' => '⚠ ' . (string) __('`[:app - :env]` supervisor service is not started on :url.', [
                     'app' => config('app.name'),
                     'env' => config('app.env'),
                     'url' => config('app.url'),

@@ -21,15 +21,16 @@ Notifications can be sent by mail, Slack and webhooks (chats often provide a web
 | ^6.0 | ^7.4 | ^1.0 |
 
 ## Table of Contents
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Testing](#testing)
-- [Changelog](#changelog)
-- [Contributing](#contributing)
-- [Credits](#credits)
-- [Licence](#license)
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Translations](#translations)
+* [Usage](#usage)
+* [Testing](#testing)
+* [Changelog](#changelog)
+* [Contributing](#contributing)
+* [Credits](#credits)
+* [Licence](#license)
 
 ## Requirements
 
@@ -40,7 +41,7 @@ The user running PHP CLI will execute the following commands:
 * `systemctl is-active supervisor`
 * `supervisorctl status "<your-process-name>"`
 
-As so, make sure you give him permission to execute these actions (`sudo visudo -f /etc/sudoers.d/<user>`) :
+As so, make sure you give him permission to execute these actions (`sudo visudo -f /etc/sudoers.d/<user>`):
 
 * `<user> ALL=NOPASSWD:/bin/systemctl is-active supervisor`
 * `<user> ALL=NOPASSWD:/usr/bin/supervisorctl status *`
@@ -69,15 +70,43 @@ Publish the package configuration:
 php artisan vendor:publish --tag=supervisor-downtime-notifier:config
 ```
 
+## Translations
+
+All words and sentences used in this package are translatable.
+
+See how to translate them on the Laravel official documentation: https://laravel.com/docs/localization#using-translation-strings-as-keys.
+
+Here is the list of the words and sentences available for translation by default:
+
+```text
+* [:app - :env] supervisor service is not started
+* We have detected that the supervisor service is not started on [:app - :env](:url).
+* `[:app - :env]` supervisor service is not started on :url.
+* Supervisor service is not started.
+* {1}[:app - :env] :count supervisor down process has been detected|[2,*][:app - :env] :count supervisor down processes have been detected
+* {1}We have detected :count supervisor down process on [:app - :env](:url): ":processes".|[2,*]We have detected :count supervisor down processes on [:app - :env](:url): ":processes".
+* Please check your down processes connecting to your server and executing the "supervisorctl status" command.
+* {1}`[:app - :env]` :count supervisor down process has been detected on :url: ":processes".|[2,*]`[:app - :env]` :count supervisor down processes have been detected on :url: ":processes".
+* {1}Down supervisor process detected: ":processes".|[2,*]Down supervisor processes detected: ":processes".
+* Notification test:
+* Exception test:
+```
+
 ## Usage
 
-Just add this command in the `schedule()` method of your `\App\Console\Kernel` class :
+Just add this command in the `schedule()` method of your `\App\Console\Kernel` class:
 
 ```php
 $schedule->command('supervisor:downtime:notify')->everyFifteenMinutes();
 ```
 
 And you will be notified if your supervisor service is not running, or if your environment supervisor processes are down when the command will be executed.
+
+To check if everything is correctly configured, you can simulate supervisor downtime detection:
+
+```bash
+php artisan supervisor:downtime:simulate
+```
 
 ## Testing
 
@@ -95,8 +124,8 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Credits
 
-- [Arthur LORENT](https://github.com/okipa)
-- [All Contributors](../../contributors)
+* [Arthur LORENT](https://github.com/okipa)
+* [All Contributors](../../contributors)
 
 ## License
 

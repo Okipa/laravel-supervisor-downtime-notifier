@@ -9,14 +9,19 @@ class OnDownProcesses
 {
     /**
      * @param \Illuminate\Support\Collection $downProcesses
+     * @param bool $isTesting
      *
      * @throws \Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\SupervisorDownProcessesDetected
      */
-    public function __invoke(Collection $downProcesses)
+    public function __invoke(Collection $downProcesses, bool $isTesting = false)
     {
         // triggers an exception to make your monitoring tool (Sentry, ...) aware of the problem.
-        throw new SupervisorDownProcessesDetected($downProcesses->count() > 1
-            ? 'Down supervisor processes detected: "' . $downProcesses->implode('", "') . '".'
-            : 'Down supervisor process detected: "' . $downProcesses->first() . '".');
+        throw new SupervisorDownProcessesDetected(($isTesting ? (string) __('Exception test:') . ' ' : '')
+            . (string) trans_choice(
+                '{1}Down supervisor process detected: ":processes".'
+                . '|[2,*]Down supervisor processes detected: ":processes".',
+                $downProcesses->count(),
+                ['processes' => $downProcesses->implode('", "')]
+            ));
     }
 }

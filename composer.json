@@ -30,7 +30,7 @@
     "require": {
         "php": "^7.4",
         "illuminate/support": "^6.0||^7.0",
-        "laravel-notification-channels/webhook": "^2.0",
+        "laravel-notification-channels/webhook": "2.0.*",
         "laravel/slack-notification-channel": "^2.0"
     },
     "require-dev": {

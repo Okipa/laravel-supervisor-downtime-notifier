@@ -4,6 +4,7 @@ namespace Okipa\LaravelSupervisorDowntimeNotifier\Test\Unit;
 
 use DB;
 use Illuminate\Support\Facades\Notification as NotificationFacade;
+use Okipa\LaravelSupervisorDowntimeNotifier\Commands\SimulateSupervisorDownTime;
 use Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\InvalidAllowedToRun;
 use Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\SupervisorDownProcessesDetected;
 use Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\SupervisorServiceNotStarted;
@@ -342,7 +343,38 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         ]);
         $callback = (new SupervisorDowntimeNotifier)->getDownProcessesCallback();
         $this->expectExceptionMessage('Down supervisor processes detected: "laravel-queue-testing-worker:process-1", '
-            . '"laravel-queue-testing-worker:process-2"');
+            . '"laravel-queue-testing-worker:process-2".');
         $callback($downProcesses);
+    }
+
+
+    public function testSimulationNotification()
+    {
+        config()->set('supervisor-downtime-notifier.callbacks.down_processes', null);
+        $this->artisan(SimulateSupervisorDownTime::class);
+        NotificationFacade::assertSentTo(
+            new Notifiable(),
+            ProcessesAreDown::class,
+            function ($notification, $channels) {
+                // mail
+                $mailData = $notification->toMail($channels)->toArray();
+                $this->assertStringContainsString('Notification test: ', $mailData['subject']);
+                $this->assertStringContainsString('Notification test: ', $mailData['introLines'][0]);
+                // slack
+                $slackData = $notification->toSlack($channels);
+                $this->assertStringContainsString('Notification test: ', $slackData->content);
+                // webhook
+                $webhookData = $notification->toWebhook($channels)->toArray();
+                $this->assertStringContainsString('Notification test: ', $webhookData['data']['text']);
+
+                return true;
+            }
+        );
+    }
+
+    public function testSimulationCallback()
+    {
+        $this->expectExceptionMessage('Exception test: ');
+        $this->artisan(SimulateSupervisorDownTime::class);
     }
 }
