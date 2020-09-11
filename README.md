@@ -14,8 +14,6 @@ Get notified and execute PHP callback when:
   
 Notifications can be sent by mail, Slack and webhooks (chats often provide a webhook API).
 
-**:warning: Package in development :warning:**
-
 ## Compatibility
 
 | Laravel version | PHP version | Package version |
