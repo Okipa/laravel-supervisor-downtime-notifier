@@ -10,6 +10,6 @@ class OnServiceNotStarted
     public function __invoke()
     {
         // triggers an exception to make your monitoring tool (Sentry, ...) aware of the problem.
-        throw new SupervisorServiceNotStarted(__('Supervisor service is not started.'));
+        throw new SupervisorServiceNotStarted((string) __('Supervisor service is not started.'));
     }
 }
