@@ -12,11 +12,14 @@ class ProcessesAreDown extends Notification
 {
     protected Collection $downProcesses;
 
+    protected bool $isTesting;
+
     protected int $processesCount;
 
-    public function __construct(Collection $downProcesses)
+    public function __construct(Collection $downProcesses, bool $isTesting = false)
     {
         $this->downProcesses = $downProcesses;
+        $this->isTesting = $isTesting;
         $this->processesCount = $downProcesses->count();
     }
 
@@ -38,30 +41,32 @@ class ProcessesAreDown extends Notification
     public function toMail(): MailMessage
     {
         return (new MailMessage)->level('error')
-            ->subject(trans_choice(
-                '{1}[:app - :env] :count supervisor down process has been detected'
-                . '|[2,*][:app - :env] :count supervisor down processes have been detected',
-                $this->processesCount,
-                [
-                    'app' => config('app.name'),
-                    'env' => config('app.env'),
-                    'count' => $this->processesCount,
-                ]
-            ))
-            ->line(trans_choice(
-                '{1}We have detected :count supervisor down process on [:app - :env](:url): ":processes".'
-                . '|[2,*]We have detected :count supervisor down processes on [:app - :env](:url): ":processes".',
-                $this->processesCount,
-                [
-                    'count' => $this->processesCount,
-                    'app' => config('app.name'),
-                    'env' => config('app.env'),
-                    'url' => config('app.url'),
-                    'processes' => $this->downProcesses->implode('", "'),
-                ]
-            ))
-            ->line('Please check your down processes connecting to your server and executing the '
-                . '"supervisorctl status" command.');
+            ->subject(($this->isTesting ? (string) __('Notification test:') . ' ' : '')
+                . (string) trans_choice(
+                    '{1}[:app - :env] :count supervisor down process has been detected'
+                    . '|[2,*][:app - :env] :count supervisor down processes have been detected',
+                    $this->processesCount,
+                    [
+                        'app' => config('app.name'),
+                        'env' => config('app.env'),
+                        'count' => $this->processesCount,
+                    ]
+                ))
+            ->line(($this->isTesting ? (string) __('Notification test:') . ' ' : '')
+                . (string) trans_choice(
+                    '{1}We have detected :count supervisor down process on [:app - :env](:url): ":processes".'
+                    . '|[2,*]We have detected :count supervisor down processes on [:app - :env](:url): ":processes".',
+                    $this->processesCount,
+                    [
+                        'count' => $this->processesCount,
+                        'app' => config('app.name'),
+                        'env' => config('app.env'),
+                        'url' => config('app.url'),
+                        'processes' => $this->downProcesses->implode('", "'),
+                    ]
+                ))
+            ->line((string) __('Please check your down processes connecting to your server and executing the '
+                . '"supervisorctl status" command.'));
     }
 
     /**
@@ -71,18 +76,20 @@ class ProcessesAreDown extends Notification
      */
     public function toSlack(): SlackMessage
     {
-        return (new SlackMessage)->error()->content('⚠ ' . trans_choice(
-            '{1}`[:app - :env]` :count supervisor down process has been detected on :url: ":processes".'
+        return (new SlackMessage)->error()->content('⚠ '
+            . ($this->isTesting ? (string) __('Notification test:') . ' ' : '')
+            . (string) trans_choice(
+                '{1}`[:app - :env]` :count supervisor down process has been detected on :url: ":processes".'
                 . '|[2,*]`[:app - :env]` :count supervisor down processes have been detected on :url: ":processes".',
-            $this->processesCount,
-            [
-                'app' => config('app.name'),
-                'env' => config('app.env'),
-                'count' => $this->processesCount,
-                'url' => config('app.url'),
-                'processes' => $this->downProcesses->implode('", "'),
-            ]
-        ));
+                $this->processesCount,
+                [
+                    'app' => config('app.name'),
+                    'env' => config('app.env'),
+                    'count' => $this->processesCount,
+                    'url' => config('app.url'),
+                    'processes' => $this->downProcesses->implode('", "'),
+                ]
+            ));
     }
 
     /**
@@ -94,19 +101,21 @@ class ProcessesAreDown extends Notification
     {
         // rocket chat webhook example
         return WebhookMessage::create()->data([
-            'text' => '⚠ ' . trans_choice(
-                '{1}`[:app - :env]` :count supervisor down process has been detected on :url: ":processes".'
+            'text' => '⚠ '
+                . ($this->isTesting ? (string) __('Notification test:') . ' ' : '')
+                . (string) trans_choice(
+                    '{1}`[:app - :env]` :count supervisor down process has been detected on :url: ":processes".'
                     . '|[2,*]`[:app - :env]` :count supervisor down processes have been detected on :url: '
                     . '":processes".',
-                $this->processesCount,
-                [
-                    'app' => config('app.name'),
-                    'env' => config('app.env'),
-                    'count' => $this->processesCount,
-                    'url' => config('app.url'),
-                    'processes' => $this->downProcesses->implode('", "'),
-                ]
-            ),
+                    $this->processesCount,
+                    [
+                        'app' => config('app.name'),
+                        'env' => config('app.env'),
+                        'count' => $this->processesCount,
+                        'url' => config('app.url'),
+                        'processes' => $this->downProcesses->implode('", "'),
+                    ]
+                ),
         ])->header('Content-Type', 'application/json');
     }
 }

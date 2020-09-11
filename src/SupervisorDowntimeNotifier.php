@@ -42,9 +42,7 @@ class SupervisorDowntimeNotifier
             . 'boolean or a callable.');
     }
 
-    /**
-     * @throws \Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\SupervisorServiceNotStarted
-     */
+    /** @throws \Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\SupervisorServiceNotStarted */
     public function monitorSupervisorService(): void
     {
         if (! $this->getSupervisorChecker()->isServiceRunning()) {
@@ -103,9 +101,12 @@ class SupervisorDowntimeNotifier
         return config('supervisor-downtime-notifier.supervisor.' . app()->environment());
     }
 
-    public function getDownProcessesNotification(Collection $downProcesses): ProcessesAreDown
+    public function getDownProcessesNotification(Collection $downProcesses, bool $isTesting = false): ProcessesAreDown
     {
-        return app(config('supervisor-downtime-notifier.notifications.down_processes'), compact('downProcesses'));
+        return app(
+            config('supervisor-downtime-notifier.notifications.down_processes'),
+            compact('downProcesses', 'isTesting')
+        );
     }
 
     public function getDownProcessesCallback(): ?OnDownProcesses

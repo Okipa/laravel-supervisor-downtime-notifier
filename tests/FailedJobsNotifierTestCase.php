@@ -17,7 +17,7 @@ abstract class FailedJobsNotifierTestCase extends TestCase
      *
      * @return array
      */
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [SupervisorDowntimeNotifierServiceProvider::class];
     }
