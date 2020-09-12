@@ -65,8 +65,8 @@ return [
      */
     'channels' => [
         'mail',
-        // 'slack', // Requires laravel/slack-notification-channel
-        // NotificationChannels\Webhook\WebhookChannel::class // Requires laravel-notification-channels/webhook
+        // 'slack', // Requires laravel/slack-notification-channel package
+        // NotificationChannels\Webhook\WebhookChannel::class // Requires laravel-notification-channels/webhook package
     ],
 
     'mail' => ['to' => 'email@example.test'],
