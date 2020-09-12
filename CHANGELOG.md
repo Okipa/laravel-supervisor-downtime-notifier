@@ -1,5 +1,6 @@
 # Changelog
 
+## [1.1.2](https://github.com/Okipa/laravel-supervisor-downtime-notifier/compare/1.1.1...1.1.2)
 ## [1.1.1](https://github.com/Okipa/laravel-supervisor-downtime-notifier/compare/1.1.0...1.1.1)
 
 2020-09-12
