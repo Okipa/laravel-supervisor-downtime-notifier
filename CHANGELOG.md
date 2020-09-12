@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.1](https://github.com/Okipa/laravel-supervisor-downtime-notifier/compare/1.1.0...1.1.1)
+
+2020-09-12
+
+* Fixed details for `supervisor:downtime:simulate` command.
+
 ## [1.1.0](https://github.com/Okipa/laravel-supervisor-downtime-notifier/compare/1.0.2...1.1.0)
 
 2020-09-11

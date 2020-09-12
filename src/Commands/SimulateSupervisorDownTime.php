@@ -24,7 +24,7 @@ class SimulateSupervisorDownTime extends Command
     /** @throws \Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\SupervisorDownProcessesDetected */
     public function handle(): void
     {
-        $fakeDownProcesses = collect([[],[]]);
+        $fakeDownProcesses = collect(['fake-process-1', 'fake-process-2']);
         $notification = (new SupervisorDowntimeNotifier)->getDownProcessesNotification($fakeDownProcesses, true);
         (new SupervisorDowntimeNotifier)->getNotifiable()->notify($notification);
         $onDownProcesses = (new SupervisorDowntimeNotifier)->getDownProcessesCallback();
