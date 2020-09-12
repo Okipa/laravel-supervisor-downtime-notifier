@@ -102,7 +102,7 @@ Here is the list of the words and sentences available for translation by default
 * {1}We have detected :count supervisor down process on [:app - :env](:url): ":processes".|[2,*]We have detected :count supervisor down processes on [:app - :env](:url): ":processes".
 * Please check your down processes connecting to your server and executing the "supervisorctl status" command.
 * {1}`[:app - :env]` :count supervisor down process has been detected on :url: ":processes".|[2,*]`[:app - :env]` :count supervisor down processes have been detected on :url: ":processes".
-* {1}Down supervisor process detected: ":processes".|[2,*]Down supervisor processes detected: ":processes".
+* {1}:count supervisor down process has been detected: ":processes".|[2,*]:count supervisor down processes have been detected: ":processes".
 * Notification test:
 * Exception test:
 ```

@@ -18,8 +18,8 @@ class OnDownProcesses
         // triggers an exception to make your monitoring tool (Sentry, ...) aware of the problem.
         throw new SupervisorDownProcessesDetected(($isTesting ? (string) __('Exception test:') . ' ' : '')
             . (string) trans_choice(
-                '{1}Down supervisor process detected: ":processes".'
-                . '|[2,*]Down supervisor processes detected: ":processes".',
+                '{1}:count supervisor down process has been detected: ":processes".'
+                . '|[2,*]:count supervisor down processes have been detected: ":processes".',
                 $downProcesses->count(),
                 ['processes' => $downProcesses->implode('", "')]
             ));

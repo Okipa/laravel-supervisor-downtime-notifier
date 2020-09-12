@@ -331,7 +331,7 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
     {
         $downProcesses = collect(['laravel-queue-testing-worker:*']);
         $callback = (new SupervisorDowntimeNotifier)->getDownProcessesCallback();
-        $this->expectExceptionMessage('Down supervisor process detected: "laravel-queue-testing-worker:*".');
+        $this->expectExceptionMessage('1 supervisor down process has been detected: "laravel-queue-testing-worker:*".');
         $callback($downProcesses);
     }
 
@@ -342,11 +342,11 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
             'laravel-queue-testing-worker:process-2',
         ]);
         $callback = (new SupervisorDowntimeNotifier)->getDownProcessesCallback();
-        $this->expectExceptionMessage('Down supervisor processes detected: "laravel-queue-testing-worker:process-1", '
+        $this->expectExceptionMessage('2 supervisor down processes have been detected: '
+            . '"laravel-queue-testing-worker:process-1", '
             . '"laravel-queue-testing-worker:process-2".');
         $callback($downProcesses);
     }
-
 
     public function testSimulationNotification()
     {
