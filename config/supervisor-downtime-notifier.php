@@ -17,13 +17,13 @@ return [
         'production' => [
             'sudo' => true,
             'processes' => [
-                // 'laravel-queue-production-worker:*',
+                // 'laravel-horizon-project-production:*',
             ]
         ],
-        'staging' => [
+        'preprod' => [
             'sudo' => true,
             'processes' => [
-                // 'laravel-queue-staging-worker:*',
+                // 'laravel-horizon-project-preprod:*',
             ]
         ],
     ],
@@ -69,11 +69,17 @@ return [
         // NotificationChannels\Webhook\WebhookChannel::class // Requires laravel-notification-channels/webhook package
     ],
 
-    'mail' => ['to' => 'email@example.test'],
+    'mail' => [
+        'to' => 'email@example.test'
+    ],
 
-    'slack' => ['webhookUrl' => 'https://your-slack-webhook.slack.com'],
+    'slack' => [
+        'webhookUrl' => 'https://your-slack-webhook.slack.com'
+    ],
 
     // Rocket chat webhook example
-    'webhook' => ['url' => 'https://rocket.chat/hooks/1234/5678'],
+    'webhook' => [
+        'url' => 'https://rocket.chat/hooks/1234/5678'
+    ],
 
 ];
