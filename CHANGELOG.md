@@ -2,7 +2,7 @@
 
 ## [2.0.0](https://github.com/Okipa/laravel-supervisor-downtime-notifier/compare/1.1.0...2.0.0)
 
-2020-09-11
+2020-09-25
 
 * Added Laravel 8 support.
 * Dropped Laravel 6 support.
