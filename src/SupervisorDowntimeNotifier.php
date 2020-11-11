@@ -35,7 +35,8 @@ class SupervisorDowntimeNotifier
         $allowedToRun = config('supervisor-downtime-notifier.allowed_to_run');
         if (is_callable($allowedToRun)) {
             return $allowedToRun();
-        } elseif (is_bool($allowedToRun)) {
+        }
+        if (is_bool($allowedToRun)) {
             return $allowedToRun;
         }
         throw new InvalidAllowedToRun('The `supervisor-downtime-notifier.allowed_to_run` config is not a '

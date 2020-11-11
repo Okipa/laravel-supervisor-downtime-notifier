@@ -26,7 +26,7 @@ class ServiceNotStarted extends Notification
      */
     public function toMail(): MailMessage
     {
-        return (new MailMessage)->level('error')
+        return (new MailMessage())->level('error')
             ->subject((string) __('[:app - :env] supervisor service is not started', [
                 'app' => config('app.name'),
                 'env' => config('app.env'),
@@ -47,7 +47,7 @@ class ServiceNotStarted extends Notification
      */
     public function toSlack(): SlackMessage
     {
-        return (new SlackMessage)->error()
+        return (new SlackMessage())->error()
             ->content('⚠ ' . (string) __('`[:app - :env]` supervisor service is not started on :url.', [
                     'app' => config('app.name'),
                     'env' => config('app.env'),

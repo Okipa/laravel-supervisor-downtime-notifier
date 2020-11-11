@@ -29,6 +29,6 @@ class NotifySupervisorDownTime extends Command
      */
     public function handle(): void
     {
-        (new SupervisorDowntimeNotifier)->notify();
+        app(SupervisorDowntimeNotifier::class)->notify();
     }
 }

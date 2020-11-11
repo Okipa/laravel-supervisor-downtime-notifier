@@ -6,11 +6,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Build status](https://github.com/Okipa/laravel-supervisor-downtime-notifier/workflows/CI/badge.svg)](https://github.com/Okipa/laravel-supervisor-downtime-notifier/actions)
 [![Coverage Status](https://coveralls.io/repos/github/Okipa/laravel-supervisor-downtime-notifier/badge.svg?branch=master)](https://coveralls.io/github/Okipa/laravel-supervisor-downtime-notifier?branch=master)
-[![Quality Score](https://img.shields.io/scrutinizer/g/Okipa/laravel-supervisor-downtime-notifier.svg?style=flat-square)](https://scrutinizer-ci.com/g/Okipa/laravel-supervisor-downtime-notifier/?branch=master)
 
 Get notified and execute PHP callback when:
-* the supervisor service is not running on your server.
-* your environment supervisor processes are down.
+* The supervisor service is not running on your server
+* Your environment supervisor processes are down
   
 Notifications can be sent by mail, Slack and webhooks (chats often provide a webhook API).
 
