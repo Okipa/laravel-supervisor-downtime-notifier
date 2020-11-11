@@ -99,7 +99,7 @@ class ProcessesAreDown extends Notification
      */
     public function toWebhook(): WebhookMessage
     {
-        // rocket chat webhook example
+        // Rocket chat webhook example.
         return WebhookMessage::create()->data([
             'text' => '⚠ '
                 . ($this->isTesting ? __('Notification test:') . ' ' : '')

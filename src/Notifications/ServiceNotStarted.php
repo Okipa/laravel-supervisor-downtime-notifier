@@ -62,7 +62,7 @@ class ServiceNotStarted extends Notification
      */
     public function toWebhook(): WebhookMessage
     {
-        // rocket chat webhook example
+        // Rocket chat webhook example.
         return WebhookMessage::create()->data([
             'text' => '⚠ ' . (string) __('`[:app - :env]` supervisor service is not started on :url.', [
                     'app' => config('app.name'),

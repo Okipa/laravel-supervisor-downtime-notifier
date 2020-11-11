@@ -1,4 +1,4 @@
-![Laravel Supervisor Downtime Notifier](docs/laravel-supervisor-downtime-notifier.png)
+![Laravel Supervisor Downtime Notifier](/docs/laravel-supervisor-downtime-notifier.png)
 <p align="center">
     <a href="https://github.com/Okipa/laravel-supervisor-downtime-notifier/releases" title="Latest Stable Version">
         <img src="https://img.shields.io/github/release/Okipa/laravel-supervisor-downtime-notifier.svg?style=flat-square" alt="Latest Stable Version">
