@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: ['7.4']
+        php: ['7.4', '8.0']
         laravel: ['7.*', '8.*']
         include:
           - laravel: '8.*'
@@ -38,37 +38,37 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: common, curl, json, mbstring, zip, sqlite, pdo_sqlite
-          coverage: xdebug
+          extensions: curl, json, mbstring, zip, sqlite, pdo_sqlite
+          coverage: pcov
 
       - name: Install dependencies
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer update --prefer-dist --no-interaction --no-suggest
+          composer update --prefer-dist --no-interaction
 
-      # lower php and laravel versions
+      # Lower PHP and laravel versions.
 
       - name: PHPUnit
-        if: matrix.php != '7.4' || matrix.laravel != '8.*'
+        if: matrix.php != '8.0' || matrix.laravel != '8.*'
         run: vendor/bin/phpunit
 
-      # last php and laravel versions
+      # Last PHP and laravel versions.
 
       - name: Code analysis
-        if: matrix.php == '7.4' && matrix.laravel == '8.*'
+        if: matrix.php == '8.0' && matrix.laravel == '8.*'
         run: |
           vendor/bin/phpcs
-          vendor/bin/phpmd src text phpmd.xml
+          vendor/bin/phpmd config,src text phpmd.xml
           vendor/bin/phpstan analyse
 
       - name: PHPUnit + Code coverage
-        if: matrix.php == '7.4' && matrix.laravel == '8.*'
+        if: matrix.php == '8.0' && matrix.laravel == '8.*'
         run: |
           mkdir -p build/logs
           vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
 
       - name: Code coverage upload to Coveralls
-        if: matrix.php == '7.4' && matrix.laravel == '8.*'
+        if: matrix.php == '8.0' && matrix.laravel == '8.*'
         env:
           COVERALLS_RUN_LOCALLY: 1
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}

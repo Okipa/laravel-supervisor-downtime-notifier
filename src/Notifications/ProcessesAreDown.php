@@ -40,9 +40,9 @@ class ProcessesAreDown extends Notification
      */
     public function toMail(): MailMessage
     {
-        return (new MailMessage)->level('error')
-            ->subject(($this->isTesting ? (string) __('Notification test:') . ' ' : '')
-                . (string) trans_choice(
+        return (new MailMessage())->level('error')
+            ->subject(($this->isTesting ? __('Notification test:') . ' ' : '')
+                . trans_choice(
                     '{1}[:app - :env] :count supervisor down process has been detected'
                     . '|[2,*][:app - :env] :count supervisor down processes have been detected',
                     $this->processesCount,
@@ -52,8 +52,8 @@ class ProcessesAreDown extends Notification
                         'count' => $this->processesCount,
                     ]
                 ))
-            ->line(($this->isTesting ? (string) __('Notification test:') . ' ' : '')
-                . (string) trans_choice(
+            ->line(($this->isTesting ? __('Notification test:') . ' ' : '')
+                . trans_choice(
                     '{1}We have detected :count supervisor down process on [:app - :env](:url): ":processes".'
                     . '|[2,*]We have detected :count supervisor down processes on [:app - :env](:url): ":processes".',
                     $this->processesCount,
@@ -76,9 +76,9 @@ class ProcessesAreDown extends Notification
      */
     public function toSlack(): SlackMessage
     {
-        return (new SlackMessage)->error()->content('⚠ '
-            . ($this->isTesting ? (string) __('Notification test:') . ' ' : '')
-            . (string) trans_choice(
+        return (new SlackMessage())->error()->content('⚠ '
+            . ($this->isTesting ? __('Notification test:') . ' ' : '')
+            . trans_choice(
                 '{1}`[:app - :env]` :count supervisor down process has been detected on :url: ":processes".'
                 . '|[2,*]`[:app - :env]` :count supervisor down processes have been detected on :url: ":processes".',
                 $this->processesCount,
@@ -99,11 +99,11 @@ class ProcessesAreDown extends Notification
      */
     public function toWebhook(): WebhookMessage
     {
-        // rocket chat webhook example
+        // Rocket chat webhook example.
         return WebhookMessage::create()->data([
             'text' => '⚠ '
-                . ($this->isTesting ? (string) __('Notification test:') . ' ' : '')
-                . (string) trans_choice(
+                . ($this->isTesting ? __('Notification test:') . ' ' : '')
+                . trans_choice(
                     '{1}`[:app - :env]` :count supervisor down process has been detected on :url: ":processes".'
                     . '|[2,*]`[:app - :env]` :count supervisor down processes have been detected on :url: '
                     . '":processes".',

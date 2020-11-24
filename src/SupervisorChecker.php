@@ -45,10 +45,6 @@ class SupervisorChecker
         return collect($downProcesses);
     }
 
-    /**
-     * @return bool
-     * @throws \Exception
-     */
     public function isServiceRunning(): bool
     {
         $command = '$(which systemctl) is-active --quiet supervisor';

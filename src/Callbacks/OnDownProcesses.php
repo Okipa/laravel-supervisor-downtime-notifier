@@ -15,9 +15,9 @@ class OnDownProcesses
      */
     public function __invoke(Collection $downProcesses, bool $isTesting = false)
     {
-        // triggers an exception to make your monitoring tool (Sentry, ...) aware of the problem.
+        // Triggers an exception to make your monitoring tool (Sentry, ...) aware of the problem.
         throw new SupervisorDownProcessesDetected(($isTesting ? (string) __('Exception test:') . ' ' : '')
-            . (string) trans_choice(
+            . trans_choice(
                 '{1}:count supervisor down process has been detected: ":processes".'
                 . '|[2,*]:count supervisor down processes have been detected: ":processes".',
                 $downProcesses->count(),

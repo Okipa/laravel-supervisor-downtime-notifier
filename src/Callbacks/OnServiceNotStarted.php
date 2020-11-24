@@ -9,7 +9,7 @@ class OnServiceNotStarted
     /** @throws \Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\SupervisorServiceNotStarted */
     public function __invoke()
     {
-        // triggers an exception to make your monitoring tool (Sentry, ...) aware of the problem.
+        // Triggers an exception to make your monitoring tool (Sentry, ...) aware of the problem.
         throw new SupervisorServiceNotStarted((string) __('Supervisor service is not started.'));
     }
 }

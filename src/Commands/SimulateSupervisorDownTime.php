@@ -25,9 +25,9 @@ class SimulateSupervisorDownTime extends Command
     public function handle(): void
     {
         $fakeDownProcesses = collect(['fake-process-1', 'fake-process-2']);
-        $notification = (new SupervisorDowntimeNotifier)->getDownProcessesNotification($fakeDownProcesses, true);
-        (new SupervisorDowntimeNotifier)->getNotifiable()->notify($notification);
-        $onDownProcesses = (new SupervisorDowntimeNotifier)->getDownProcessesCallback();
+        $notification = app(SupervisorDowntimeNotifier::class)->getDownProcessesNotification($fakeDownProcesses, true);
+        app(SupervisorDowntimeNotifier::class)->getNotifiable()->notify($notification);
+        $onDownProcesses = app(SupervisorDowntimeNotifier::class)->getDownProcessesCallback();
         if ($onDownProcesses) {
             $onDownProcesses($fakeDownProcesses, true);
         }
