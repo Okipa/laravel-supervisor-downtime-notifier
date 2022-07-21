@@ -19,9 +19,9 @@ use Okipa\LaravelSupervisorDowntimeNotifier\Test\Dummy\Callbacks\AnotherOnDownPr
 use Okipa\LaravelSupervisorDowntimeNotifier\Test\Dummy\Callbacks\AnotherOnServiceNotStarted;
 use Okipa\LaravelSupervisorDowntimeNotifier\Test\Dummy\Notifications\AnotherProcessesAreDown;
 use Okipa\LaravelSupervisorDowntimeNotifier\Test\Dummy\Notifications\AnotherServiceNotStarted;
-use Okipa\LaravelSupervisorDowntimeNotifier\Test\FailedJobsNotifierTestCase;
+use Okipa\LaravelSupervisorDowntimeNotifier\Test\TestCase;
 
-class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
+class SupervisorMonitoringTest extends TestCase
 {
     public function setUp(): void
     {
@@ -29,21 +29,24 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         NotificationFacade::fake();
     }
 
-    public function testAllowedToRunWithWrongValue(): void
+    /** @test */
+    public function it_can_check_if_allowed_to_run_with_wrong_config_value(): void
     {
         config()->set('supervisor-downtime-notifier.allowed_to_run', 'test');
         $this->expectException(InvalidAllowedToRun::class);
         app(SupervisorDowntimeNotifier::class)->isAllowedToRun();
     }
 
-    public function testAllowedToRunWithBoolean(): void
+    /** @test */
+    public function it_can_check_if_allowed_to_run_with_boolean_value(): void
     {
         config()->set('supervisor-downtime-notifier.allowed_to_run', false);
         $allowedToRun = app(SupervisorDowntimeNotifier::class)->isAllowedToRun();
         self::assertFalse($allowedToRun);
     }
 
-    public function testAllowedToRunWithCallable(): void
+    /** @test */
+    public function it_can_check_if_allowed_to_run_with_callable_value(): void
     {
         config()->set('supervisor-downtime-notifier.allowed_to_run', function () {
             return true;
@@ -52,13 +55,15 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         self::assertTrue($allowedToRun);
     }
 
-    public function testSetCustomSupervisorChecker(): void
+    /** @test */
+    public function it_can_set_custom_notifiable(): void
     {
         config()->set('supervisor-downtime-notifier.supervisor_checker', AnotherSupervisorChecker::class);
         $supervisorChecker = app(SupervisorDowntimeNotifier::class)->getSupervisorChecker();
         self::assertInstanceOf(AnotherSupervisorChecker::class, $supervisorChecker);
     }
 
+    /** @test */
     public function testSetCustomNotifiable(): void
     {
         config()->set('supervisor-downtime-notifier.notifiable', AnotherNotifiable::class);
@@ -66,7 +71,8 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         self::assertInstanceOf(AnotherNotifiable::class, $notifiable);
     }
 
-    public function testGetCustomServiceNotStartedNotification(): void
+    /** @test */
+    public function it_can_set_custom_service_not_started_notification(): void
     {
         config()->set(
             'supervisor-downtime-notifier.notifications.service_not_started',
@@ -76,28 +82,32 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         self::assertInstanceOf(AnotherServiceNotStarted::class, $notification);
     }
 
-    public function testGetCustomDownProcessesNotification(): void
+    /** @test */
+    public function it_can_set_custom_down_processes_notification(): void
     {
         config()->set('supervisor-downtime-notifier.notifications.down_processes', AnotherProcessesAreDown::class);
         $notification = app(SupervisorDowntimeNotifier::class)->getDownProcessesNotification(collect());
         self::assertInstanceOf(AnotherProcessesAreDown::class, $notification);
     }
 
-    public function testGetCustomServiceNotStartedCallback(): void
+    /** @test */
+    public function it_can_set_custom_service_not_started_callback(): void
     {
         config()->set('supervisor-downtime-notifier.callbacks.service_not_started', AnotherOnServiceNotStarted::class);
         $callback = app(SupervisorDowntimeNotifier::class)->getServiceNotStartedCallback();
         self::assertInstanceOf(AnotherOnServiceNotStarted::class, $callback);
     }
 
-    public function testGetCustomDownProcessesCallback(): void
+    /** @test */
+    public function it_can_set_custom_down_processes_callback(): void
     {
         config()->set('supervisor-downtime-notifier.callbacks.down_processes', AnotherOnDownProcesses::class);
         $callback = app(SupervisorDowntimeNotifier::class)->getDownProcessesCallback();
         self::assertInstanceOf(AnotherOnDownProcesses::class, $callback);
     }
 
-    public function testNothingHappensWhenNotAllowed(): void
+    /** @test */
+    public function it_cant_send_notification_when_not_allowed_to(): void
     {
         $this->partialMock(SupervisorDowntimeNotifier::class, function ($mock) {
             $mock->shouldReceive('monitorSupervisorService')->never();
@@ -108,7 +118,8 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         NotificationFacade::assertNothingSent();
     }
 
-    public function testNoNotificationIsSentWhenSupervisorServiceIsRunning(): void
+    /** @test */
+    public function it_cant_send_notification_when_service_is_running(): void
     {
         $this->partialMock(SupervisorChecker::class, function ($mock) {
             $mock->shouldReceive('isServiceRunning')->once()->andReturn(true);
@@ -117,7 +128,8 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         NotificationFacade::assertNothingSent();
     }
 
-    public function testNotificationIsSentWhenSupervisorServiceIsNotRunning(): void
+    /** @test */
+    public function it_can_send_notification_when_service_is_not_running(): void
     {
         $this->partialMock(SupervisorChecker::class, function ($mock) {
             $mock->shouldReceive('isServiceRunning')->once()->andReturn(false);
@@ -127,7 +139,8 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         NotificationFacade::assertSentTo(new Notifiable(), ServiceNotStarted::class);
     }
 
-    public function testCallbackIsTriggeredWhenSupervisorServiceIsNotRunning(): void
+    /** @test */
+    public function it_can_trigger_callback_when_service_is_not_running(): void
     {
         $this->partialMock(SupervisorChecker::class, function ($mock) {
             $mock->shouldReceive('isServiceRunning')->once()->andReturn(false);
@@ -136,7 +149,8 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         $this->artisan('supervisor:downtime:notify')->assertExitCode(0);
     }
 
-    public function testNoNotificationIsSentWhenSupervisorProcessesAreUp(): void
+    /** @test */
+    public function it_cant_send_processes_are_down_notification_when_services_are_up(): void
     {
         config()->set('supervisor-downtime-notifier.supervisor', [
             'testing' => ['laravel-queue-testing-worker:*'],
@@ -149,7 +163,8 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         NotificationFacade::assertNothingSent();
     }
 
-    public function testNotificationIsSentWhenSupervisorProcessesAreDown(): void
+    /** @test */
+    public function it_can_send_notification_when_processes_are_down(): void
     {
         config()->set('supervisor-downtime-notifier.supervisor', [
             'testing' => ['laravel-queue-testing-worker:*'],
@@ -163,7 +178,8 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         NotificationFacade::assertSentTo(new Notifiable(), ProcessesAreDown::class);
     }
 
-    public function testCallbackIsTriggeredWhenProcessesAreDown(): void
+    /** @test */
+    public function it_can_trigger_callback_when_processes_are_down(): void
     {
         config()->set('supervisor-downtime-notifier.supervisor', [
             'testing' => ['laravel-queue-testing-worker:*'],
@@ -176,7 +192,8 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         $this->artisan('supervisor:downtime:notify')->assertExitCode(0);
     }
 
-    public function testDefaultServiceNotStartedMessage(): void
+    /** @test */
+    public function it_can_send_default_service_not_started_notification_message(): void
     {
         $notification = app(SupervisorDowntimeNotifier::class)->getServiceNotStartedNotification();
         $notifiable = app(SupervisorDowntimeNotifier::class)->getNotifiable();
@@ -184,7 +201,7 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         NotificationFacade::assertSentTo(
             new Notifiable(),
             ServiceNotStarted::class,
-            function ($notification, $channels) {
+            static function ($notification, $channels) {
                 self::assertEquals(config('supervisor-downtime-notifier.channels'), $channels);
                 // mail
                 $mailData = $notification->toMail($channels)->toArray();
@@ -219,14 +236,16 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         );
     }
 
-    public function testDefaultServiceNotStartedCallbackExceptionMessage(): void
+    /** @test */
+    public function it_can_trigger_default_service_not_started_callback_exception_message(): void
     {
         $callback = app(SupervisorDowntimeNotifier::class)->getServiceNotStartedCallback();
         $this->expectExceptionMessage('Supervisor service is not started.');
         $callback();
     }
 
-    public function testDefaultProcessesAreDownNotificationSingularMessage(): void
+    /** @test */
+    public function it_can_send_default_processes_are_down_singular_notification_message(): void
     {
         $downProcesses = collect(['laravel-queue-testing-worker:*']);
         $notification = app(SupervisorDowntimeNotifier::class)->getDownProcessesNotification($downProcesses);
@@ -275,7 +294,8 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         );
     }
 
-    public function testDefaultProcessesAreDownNotificationPluralMessage(): void
+    /** @test */
+    public function it_can_send_default_processes_are_down_plural_notification_message(): void
     {
         $downProcesses = collect([
             'laravel-queue-testing-worker:process-1',
@@ -287,7 +307,7 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         NotificationFacade::assertSentTo(
             new Notifiable(),
             ProcessesAreDown::class,
-            function ($notification, $channels) {
+            static function ($notification, $channels) {
                 self::assertEquals(config('supervisor-downtime-notifier.channels'), $channels);
                 // Mail
                 $mailData = $notification->toMail($channels)->toArray();
@@ -327,7 +347,8 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         );
     }
 
-    public function testDefaultDownProcessesCallbackExceptionSingularMessage(): void
+    /** @test */
+    public function it_can_trigger_default_down_processed_callback_exception_singular_message(): void
     {
         $downProcesses = collect(['laravel-queue-testing-worker:*']);
         $callback = app(SupervisorDowntimeNotifier::class)->getDownProcessesCallback();
@@ -335,7 +356,8 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         $callback($downProcesses);
     }
 
-    public function testDefaultDownProcessesCallbackExceptionPluralMessage(): void
+    /** @test */
+    public function it_can_trigger_default_down_processed_callback_exception_plural_message(): void
     {
         $downProcesses = collect([
             'laravel-queue-testing-worker:process-1',
@@ -348,7 +370,8 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         $callback($downProcesses);
     }
 
-    public function testSimulationNotification(): void
+    /** @test */
+    public function it_can_simulate_supervisor_downtime_notification(): void
     {
         config()->set('supervisor-downtime-notifier.callbacks.down_processes', null);
         $this->artisan(SimulateSupervisorDownTime::class);
@@ -372,7 +395,8 @@ class SupervisorMonitoringTest extends FailedJobsNotifierTestCase
         );
     }
 
-    public function testSimulationCallback(): void
+    /** @test */
+    public function it_can_simulate_supervisor_downtime_exception(): void
     {
         $this->expectExceptionMessage('Exception test: ');
         $this->artisan(SimulateSupervisorDownTime::class);

@@ -11,7 +11,6 @@ use Okipa\LaravelSupervisorDowntimeNotifier\Notifications\ServiceNotStarted;
 
 class SupervisorDowntimeNotifier
 {
-
     /**
      * @throws \Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\InvalidAllowedToRun
      * @throws \Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\SupervisorDownProcessesDetected
@@ -26,10 +25,7 @@ class SupervisorDowntimeNotifier
         }
     }
 
-    /**
-     * @return bool
-     * @throws \Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\InvalidAllowedToRun
-     */
+    /** @throws \Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\InvalidAllowedToRun */
     public function isAllowedToRun(): bool
     {
         $allowedToRun = config('supervisor-downtime-notifier.allowed_to_run');

@@ -7,21 +7,12 @@ use Okipa\LaravelSupervisorDowntimeNotifier\SupervisorDowntimeNotifier;
 
 class SimulateSupervisorDownTime extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
+    /** @var string */
     protected $signature = 'supervisor:downtime:simulate';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    /** @var string */
     protected $description = 'Simulate supervisor downtime for testing purpose.';
 
-    /** @throws \Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\SupervisorDownProcessesDetected */
     public function handle(): void
     {
         $fakeDownProcesses = collect(['fake-process-1', 'fake-process-2']);

@@ -9,12 +9,7 @@ use Symfony\Component\Process\Process;
 
 class SupervisorChecker
 {
-    /**
-     * @param array $envSupervisorProcessConfig
-     *
-     * @return \Illuminate\Support\Collection
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     public function getDownProcesses(array $envSupervisorProcessConfig): Collection
     {
         $downProcesses = [];

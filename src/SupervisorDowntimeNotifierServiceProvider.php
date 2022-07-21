@@ -8,11 +8,6 @@ use Okipa\LaravelSupervisorDowntimeNotifier\Commands\SimulateSupervisorDownTime;
 
 class SupervisorDowntimeNotifierServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {
@@ -23,11 +18,6 @@ class SupervisorDowntimeNotifierServiceProvider extends ServiceProvider
         ], 'supervisor-downtime-notifier:config');
     }
 
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/supervisor-downtime-notifier.php', 'supervisor-downtime-notifier');
