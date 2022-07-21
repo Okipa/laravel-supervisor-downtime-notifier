@@ -10,34 +10,18 @@ use NotificationChannels\Webhook\WebhookMessage;
 
 class ProcessesAreDown extends Notification
 {
-    protected Collection $downProcesses;
-
-    protected bool $isTesting;
-
     protected int $processesCount;
 
-    public function __construct(Collection $downProcesses, bool $isTesting = false)
+    public function __construct(protected Collection $downProcesses, protected bool $isTesting = false)
     {
-        $this->downProcesses = $downProcesses;
-        $this->isTesting = $isTesting;
         $this->processesCount = $downProcesses->count();
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array
-     */
     public function via(): array
     {
         return config('supervisor-downtime-notifier.channels');
     }
 
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
     public function toMail(): MailMessage
     {
         return (new MailMessage())->level('error')
@@ -69,11 +53,6 @@ class ProcessesAreDown extends Notification
                 . '"supervisorctl status" command.'));
     }
 
-    /**
-     * Get the slack representation of the notification.
-     *
-     * @return \Illuminate\Notifications\Messages\SlackMessage
-     */
     public function toSlack(): SlackMessage
     {
         return (new SlackMessage())->error()->content('⚠ '
@@ -92,11 +71,6 @@ class ProcessesAreDown extends Notification
             ));
     }
 
-    /**
-     * Get the webhook representation of the notification.
-     *
-     * @return \NotificationChannels\Webhook\WebhookMessage
-     */
     public function toWebhook(): WebhookMessage
     {
         // Rocket chat webhook example.

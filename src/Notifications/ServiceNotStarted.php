@@ -9,21 +9,11 @@ use NotificationChannels\Webhook\WebhookMessage;
 
 class ServiceNotStarted extends Notification
 {
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array
-     */
     public function via(): array
     {
         return config('supervisor-downtime-notifier.channels');
     }
 
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
     public function toMail(): MailMessage
     {
         return (new MailMessage())->level('error')
@@ -40,11 +30,6 @@ class ServiceNotStarted extends Notification
                 . '"supervisorctl restart" command line.'));
     }
 
-    /**
-     * Get the slack representation of the notification.
-     *
-     * @return \Illuminate\Notifications\Messages\SlackMessage
-     */
     public function toSlack(): SlackMessage
     {
         return (new SlackMessage())->error()
@@ -55,11 +40,6 @@ class ServiceNotStarted extends Notification
                 ]));
     }
 
-    /**
-     * Get the webhook representation of the notification.
-     *
-     * @return \NotificationChannels\Webhook\WebhookMessage
-     */
     public function toWebhook(): WebhookMessage
     {
         // Rocket chat webhook example.

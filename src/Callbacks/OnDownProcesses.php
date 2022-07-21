@@ -7,12 +7,7 @@ use Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\SupervisorDownProcessesDe
 
 class OnDownProcesses
 {
-    /**
-     * @param \Illuminate\Support\Collection $downProcesses
-     * @param bool $isTesting
-     *
-     * @throws \Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\SupervisorDownProcessesDetected
-     */
+    /** @throws \Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\SupervisorDownProcessesDetected */
     public function __invoke(Collection $downProcesses, bool $isTesting = false)
     {
         // Triggers an exception to make your monitoring tool (Sentry, ...) aware of the problem.

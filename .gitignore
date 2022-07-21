@@ -2,6 +2,6 @@ build
 composer.lock
 vendor
 coverage
-tests/Support/temp
-tests/temp
+.php-cs-fixer.cache
 .phpunit.result.cache
+.idea
