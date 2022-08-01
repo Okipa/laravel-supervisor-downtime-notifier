@@ -2,7 +2,6 @@
 
 namespace Okipa\LaravelSupervisorDowntimeNotifier\Test\Unit;
 
-use DB;
 use Illuminate\Support\Facades\Notification as NotificationFacade;
 use Okipa\LaravelSupervisorDowntimeNotifier\Commands\SimulateSupervisorDownTime;
 use Okipa\LaravelSupervisorDowntimeNotifier\Exceptions\InvalidAllowedToRun;

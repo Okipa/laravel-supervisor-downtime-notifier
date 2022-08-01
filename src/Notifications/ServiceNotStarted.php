@@ -34,10 +34,10 @@ class ServiceNotStarted extends Notification
     {
         return (new SlackMessage())->error()
             ->content('⚠ ' . (string) __('`[:app - :env]` supervisor service is not started on :url.', [
-                    'app' => config('app.name'),
-                    'env' => config('app.env'),
-                    'url' => config('app.url'),
-                ]));
+                'app' => config('app.name'),
+                'env' => config('app.env'),
+                'url' => config('app.url'),
+            ]));
     }
 
     public function toWebhook(): WebhookMessage
@@ -45,10 +45,10 @@ class ServiceNotStarted extends Notification
         // Rocket chat webhook example.
         return WebhookMessage::create()->data([
             'text' => '⚠ ' . (string) __('`[:app - :env]` supervisor service is not started on :url.', [
-                    'app' => config('app.name'),
-                    'env' => config('app.env'),
-                    'url' => config('app.url'),
-                ]),
+                'app' => config('app.name'),
+                'env' => config('app.env'),
+                'url' => config('app.url'),
+            ]),
         ])->header('Content-Type', 'application/json');
     }
 }
