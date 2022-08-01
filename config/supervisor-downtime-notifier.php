@@ -18,13 +18,13 @@ return [
             'sudo' => true,
             'processes' => [
                 // 'laravel-horizon-project-production:*',
-            ]
+            ],
         ],
         'preprod' => [
             'sudo' => true,
             'processes' => [
                 // 'laravel-horizon-project-preprod:*',
-            ]
+            ],
         ],
     ],
 
