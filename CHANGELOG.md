@@ -2,7 +2,7 @@
 
 ## [2.2.1](https://github.com/Okipa/laravel-supervisor-downtime-notifier/compare/2.2.0...2.2.1)
 
-XXXX-XX-XX
+2022-08-01
 
 * Replaced `phpcs/phpcbf` by `laravel/pint`
 
