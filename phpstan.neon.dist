@@ -8,13 +8,13 @@ parameters:
         - src
         - tests
 
-    # The level 9 is the highest level
+    # Level 9 is the highest level
     level: 5
 
-    ignoreErrors:
-        - '#Parameter \#2 \$needles of static method Illuminate\\Support\\Str::contains\(\)#'
-
-    excludePaths:
-        #- ./*/*/FileToBeExcluded.php
-
-    #checkMissingIterableValueType: true
+#    ignoreErrors:
+#        - '#PHPDoc tag @var#'
+#
+#    excludePaths:
+#        - ./*/*/FileToBeExcluded.php
+#
+#    checkMissingIterableValueType: false
