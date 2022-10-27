@@ -4,12 +4,15 @@ includes:
 parameters:
 
     paths:
-        - config
-        - src
-        - tests
+        - config/
+        - src/
+        - tests/
 
     # Level 9 is the highest level
     level: 5
+
+    databaseMigrationsPath:
+        - tests/database/migrations/
 
 #    ignoreErrors:
 #        - '#PHPDoc tag @var#'

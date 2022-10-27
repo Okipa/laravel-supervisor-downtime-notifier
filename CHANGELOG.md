@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.2](https://github.com/Okipa/laravel-supervisor-downtime-notifier/compare/2.2.1...2.2.2)
+
+2022-10-27
+
+* Improved Larastan config
+* Improved CI
+
 ## [2.2.1](https://github.com/Okipa/laravel-supervisor-downtime-notifier/compare/2.2.0...2.2.1)
 
 2022-08-01
