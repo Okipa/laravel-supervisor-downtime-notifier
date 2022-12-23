@@ -32,6 +32,7 @@ Found this package helpful? Please consider supporting my work!
 
 | Laravel version | PHP version | Package version |
 |---|---|---|
+| ^8.0 &#124; ^9.0 | ^8.1 &#124; ^8.2 | ^2.3 |
 | ^8.0 &#124; ^9.0 | ^8.0 &#124; ^8.1 | ^2.2 |
 | ^7.0 &#124; ^8.0 | ^7.4 &#124; ^8.0 | ^2.1 |
 | ^7.0 &#124; ^8.0 | ^7.4 | ^2.0 |
