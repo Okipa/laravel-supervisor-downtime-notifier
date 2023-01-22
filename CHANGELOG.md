@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.4.0](https://github.com/Okipa/laravel-supervisor-downtime-notifier/compare/2.3.0...2.4.0)
+
+2023-01-22
+
+* Added Laravel 10 support
+* Dropped Laravel 8 support
+* Locked PHP versions to 8.1 and 8.2
+
 ## [2.3.0](https://github.com/Okipa/laravel-supervisor-downtime-notifier/compare/2.2.2...2.3.0)
 
 2022-12-16
